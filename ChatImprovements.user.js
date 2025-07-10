@@ -3,7 +3,7 @@
 // @description  New responsive user list with usernames and total count, more timestamps, use small signatures only, mods with diamonds, message parser (smart links), timestamps on every message, collapse room description and room tags, mobile improvements, expand starred messages on hover, highlight occurrences of same user link, room owner changelog, pretty print styles, and more...
 // @homepage     https://github.com/samliew/SO-mod-userscripts
 // @author       Samuel Liew
-// @version      4.7.13
+// @version      4.8.0
 //
 // @match        https://chat.stackoverflow.com/*
 // @match        https://chat.stackexchange.com/*
@@ -889,6 +889,14 @@ const removeProductsFromTopbar = ($existingTopbars) => {
 };
 
 /**
+ * Removes the unnecessary main site logo that's broken on dark background
+ * @param {JQuery<HTMLElement>} $existingTopbars 
+ */
+const removeMainSiteLogoFromTopbar = ($existingTopbars) => {
+  $existingTopbars.find("img[src*='logo.png']").closest('a').remove();
+};
+
+/**
  * @summary inserts topbar shared and script-specific styles
  */
 const addTopbarStyles = () => {
@@ -1027,6 +1035,7 @@ function initTopBar() {
 
   if (existingTopbars.length) {
     removeProductsFromTopbar(existingTopbars);
+    removeMainSiteLogoFromTopbar(existingTopbars);
 
     const $networkItems = $(existingTopbars).find(".network-items");
 
