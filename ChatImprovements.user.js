@@ -926,7 +926,6 @@ const addTopbarStyles = () => {
   opacity: 0;
 }
 .topbar .topbar-wrapper {
-  width: auto;
   height: 34px;
   padding: 0 20px;
 }
