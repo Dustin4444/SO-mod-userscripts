@@ -946,14 +946,14 @@ a.topbar-icon.topbar-icon-on .topbar-dialog,
 .topbar .topbar-icon.topbar-icon-on .js-loading-indicator {
   display: block !important;
 }
-.topbar .network-chat-links {
+.topbar .network-chat-links, .topbar-compatability .network-chat-links {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
   height: 34px;
   margin-left: 10px;
 }
-.topbar .network-chat-links > a {
+.topbar .network-chat-links > a, .topbar-compatability .network-chat-links > a {
   flex: 0 0 auto;
   margin: 0 3px;
   padding: 3px 7px;
@@ -965,11 +965,14 @@ a.topbar-icon.topbar-icon-on .topbar-dialog,
   border-radius: 4px;
 }
 .topbar .network-chat-links > a:active,
-.topbar .network-chat-links > a:hover {
+.topbar .network-chat-links > a:hover,
+.topbar-compatability .network-chat-links > a:active,
+.topbar-compatability .network-chat-links > a:hover {
   background: #444;
   border: none;
 }
-.topbar .network-chat-links > a.current-site {
+.topbar .network-chat-links > a.current-site,
+.topbar-compatability .network-chat-links > a.current-site {
   background: #3667af !important;
 }
 .topbar .topbar-icon .js-loading-indicator {
