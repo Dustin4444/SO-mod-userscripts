@@ -881,6 +881,14 @@ const makeUserProfileLink = (user) => {
 };
 
 /**
+ * Removes the useless "Products" button from the toolbar inherited from the main site
+ * @param {JQuery<HTMLElement>} $existingTopbars 
+ */
+const removeProductsFromTopbar = ($existingTopbars) => {
+  $existingTopbars.find("[aria-controls='products-popover']").closest('nav').remove();
+};
+
+/**
  * @summary inserts topbar shared and script-specific styles
  */
 const addTopbarStyles = () => {
@@ -1018,6 +1026,8 @@ function initTopBar() {
   const existingTopbars = $('#topbar, .topbar, .topbar-compatability');
 
   if (existingTopbars.length) {
+    removeProductsFromTopbar(existingTopbars);
+
     const $networkItems = $(existingTopbars).find(".network-items");
 
     if ($networkItems.length) {
