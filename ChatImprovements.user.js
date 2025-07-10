@@ -3,7 +3,7 @@
 // @description  New responsive user list with usernames and total count, more timestamps, use small signatures only, mods with diamonds, message parser (smart links), timestamps on every message, collapse room description and room tags, mobile improvements, expand starred messages on hover, highlight occurrences of same user link, room owner changelog, pretty print styles, and more...
 // @homepage     https://github.com/samliew/SO-mod-userscripts
 // @author       Samuel Liew
-// @version      4.7.13
+// @version      4.8.0
 //
 // @match        https://chat.stackoverflow.com/*
 // @match        https://chat.stackexchange.com/*
@@ -881,6 +881,22 @@ const makeUserProfileLink = (user) => {
 };
 
 /**
+ * Removes the useless "Products" button from the toolbar inherited from the main site
+ * @param {JQuery<HTMLElement>} $existingTopbars 
+ */
+const removeProductsFromTopbar = ($existingTopbars) => {
+  $existingTopbars.find("[aria-controls='products-popover']").closest('nav').remove();
+};
+
+/**
+ * Removes the unnecessary main site logo that's broken on dark background
+ * @param {JQuery<HTMLElement>} $existingTopbars 
+ */
+const removeMainSiteLogoFromTopbar = ($existingTopbars) => {
+  $existingTopbars.find("img[src*='logo.png']").closest('a').remove();
+};
+
+/**
  * @summary inserts topbar shared and script-specific styles
  */
 const addTopbarStyles = () => {
@@ -926,7 +942,6 @@ const addTopbarStyles = () => {
   opacity: 0;
 }
 .topbar .topbar-wrapper {
-  width: auto;
   height: 34px;
   padding: 0 20px;
 }
@@ -947,14 +962,14 @@ a.topbar-icon.topbar-icon-on .topbar-dialog,
 .topbar .topbar-icon.topbar-icon-on .js-loading-indicator {
   display: block !important;
 }
-.topbar .network-chat-links {
+.topbar .network-chat-links, .topbar-compatability .network-chat-links {
   display: inline-flex;
   flex-direction: row;
   align-items: center;
   height: 34px;
   margin-left: 10px;
 }
-.topbar .network-chat-links > a {
+.topbar .network-chat-links > a, .topbar-compatability .network-chat-links > a {
   flex: 0 0 auto;
   margin: 0 3px;
   padding: 3px 7px;
@@ -966,11 +981,14 @@ a.topbar-icon.topbar-icon-on .topbar-dialog,
   border-radius: 4px;
 }
 .topbar .network-chat-links > a:active,
-.topbar .network-chat-links > a:hover {
+.topbar .network-chat-links > a:hover,
+.topbar-compatability .network-chat-links > a:active,
+.topbar-compatability .network-chat-links > a:hover {
   background: #444;
   border: none;
 }
-.topbar .network-chat-links > a.current-site {
+.topbar .network-chat-links > a.current-site,
+.topbar-compatability .network-chat-links > a.current-site {
   background: #3667af !important;
 }
 .topbar .topbar-icon .js-loading-indicator {
@@ -1013,11 +1031,24 @@ function initTopBar() {
   addTopbarStyles();
 
   // If existing topbar exists, only add chat domain switchers
-  const existingTopbars = $('#topbar, .topbar');
+  const existingTopbars = $('#topbar, .topbar, .topbar-compatability');
+
   if (existingTopbars.length) {
-    $(existingTopbars).find(".network-items").after(
-      makeChatHostnameSwitcher(chatHostnames)
-    );
+    removeProductsFromTopbar(existingTopbars);
+    removeMainSiteLogoFromTopbar(existingTopbars);
+
+    const $networkItems = $(existingTopbars).find(".network-items");
+
+    if ($networkItems.length) {
+      $networkItems.after(makeChatHostnameSwitcher(chatHostnames));
+    } else {
+      const $searchBar = $(existingTopbars).find("#search-bar");
+
+      if ($searchBar.length) {
+        $searchBar.before(makeChatHostnameSwitcher(chatHostnames));
+      }
+    }
+
     return;
   }
 
@@ -1026,8 +1057,8 @@ function initTopBar() {
   const transcriptRoomId = transcriptRoomMatch && tryGetNumber(transcriptRoomMatch);
 
   const roomId = CHAT?.CURRENT_ROOM_ID || transcriptRoomId;
-  const user = CHAT.RoomUsers.current();
-  const isMod = CHAT.RoomUsers.current().is_moderator;
+  const user = CHAT.RoomUsers.current?.() || null;
+  const isMod = CHAT.RoomUsers.current?.().is_moderator || false;
   const modDiamond = isMod ? '&nbsp;&#9830;' : '';
 
   // Remove search due to conflict
@@ -1062,7 +1093,7 @@ function initTopBar() {
         </div>
         ${makeChatHostnameSwitcher(chatHostnames).outerHTML}
         <div class="topbar-links">
-          ${isTranscriptPage ? "" : makeUserProfileLink(user).outerHTML}
+          ${isTranscriptPage || !user ? "" : makeUserProfileLink(user).outerHTML}
           <div class="search-container">
             <form action="/search" method="get" autocomplete="off">
               <input name="q" id="searchbox" type="text" placeholder="search" size="28" maxlength="80" />
