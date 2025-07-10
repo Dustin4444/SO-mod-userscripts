@@ -1012,11 +1012,21 @@ function initTopBar() {
   addTopbarStyles();
 
   // If existing topbar exists, only add chat domain switchers
-  const existingTopbars = $('#topbar, .topbar');
+  const existingTopbars = $('#topbar, .topbar, .topbar-compatability');
+
   if (existingTopbars.length) {
-    $(existingTopbars).find(".network-items").after(
-      makeChatHostnameSwitcher(chatHostnames)
-    );
+    const $networkItems = $(existingTopbars).find(".network-items");
+
+    if ($networkItems.length) {
+      $networkItems.after(makeChatHostnameSwitcher(chatHostnames));
+    } else {
+      const $searchBar = $(existingTopbars).find("#search-bar");
+
+      if ($searchBar.length) {
+        $searchBar.before(makeChatHostnameSwitcher(chatHostnames));
+      }
+    }
+
     return;
   }
 
