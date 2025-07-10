@@ -1026,8 +1026,8 @@ function initTopBar() {
   const transcriptRoomId = transcriptRoomMatch && tryGetNumber(transcriptRoomMatch);
 
   const roomId = CHAT?.CURRENT_ROOM_ID || transcriptRoomId;
-  const user = CHAT.RoomUsers.current();
-  const isMod = CHAT.RoomUsers.current().is_moderator;
+  const user = CHAT.RoomUsers.current?.() || null;
+  const isMod = CHAT.RoomUsers.current?.().is_moderator || false;
   const modDiamond = isMod ? '&nbsp;&#9830;' : '';
 
   // Remove search due to conflict
@@ -1062,7 +1062,7 @@ function initTopBar() {
         </div>
         ${makeChatHostnameSwitcher(chatHostnames).outerHTML}
         <div class="topbar-links">
-          ${isTranscriptPage ? "" : makeUserProfileLink(user).outerHTML}
+          ${isTranscriptPage || !user ? "" : makeUserProfileLink(user).outerHTML}
           <div class="search-container">
             <form action="/search" method="get" autocomplete="off">
               <input name="q" id="searchbox" type="text" placeholder="search" size="28" maxlength="80" />
