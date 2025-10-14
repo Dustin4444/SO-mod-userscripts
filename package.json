@@ -21,7 +21,7 @@
     "@types/gapi": "^0.0.41",
     "@types/gapi.auth2": "^0.0.55",
     "@types/greasemonkey": "^4.0.2",
-    "@types/jquery": "^3.5.11",
+    "@types/jquery": "^3.5.33",
     "@types/jsdom-global": "^3.0.4",
     "@types/mocha": "^10.0.1",
     "@types/tampermonkey": "^4.0.5",
