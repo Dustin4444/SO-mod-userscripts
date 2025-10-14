@@ -25,7 +25,7 @@
     "@types/jsdom-global": "^3.0.4",
     "@types/mocha": "^10.0.1",
     "@types/tampermonkey": "^4.0.5",
-    "@userscripters/stackexchange-global-types": "^2.4.0",
+    "@userscripters/stackexchange-global-types": "^2.8.2",
     "@userscripters/storage": "^0.1.2",
     "chai": "^4.3.7",
     "eslint": "^8.39.0",
