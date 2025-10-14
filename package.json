@@ -18,7 +18,7 @@
   },
   "homepage": "https://github.com/samliew/SO-mod-userscripts#readme",
   "devDependencies": {
-    "@types/gapi": "^0.0.41",
+    "@types/gapi": "^0.0.47",
     "@types/gapi.auth2": "^0.0.55",
     "@types/greasemonkey": "^4.0.2",
     "@types/jquery": "^3.5.11",
