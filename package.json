@@ -27,7 +27,7 @@
     "@types/tampermonkey": "^4.0.5",
     "@userscripters/stackexchange-global-types": "^2.4.0",
     "@userscripters/storage": "^0.1.2",
-    "chai": "^4.3.7",
+    "chai": "^6.0.1",
     "eslint": "^8.39.0",
     "jQuery": "^1.7.4",
     "jsdom-global": "3.0.2",
