@@ -31,7 +31,7 @@
     "eslint": "^8.39.0",
     "jQuery": "^1.7.4",
     "jsdom-global": "3.0.2",
-    "mocha": "^10.2.0"
+    "mocha": "^11.7.2"
   },
   "mocha": {
     "require": [
