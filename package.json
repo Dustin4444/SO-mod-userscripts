@@ -23,7 +23,7 @@
     "@types/greasemonkey": "^4.0.2",
     "@types/jquery": "^3.5.11",
     "@types/jsdom-global": "^3.0.4",
-    "@types/mocha": "^10.0.1",
+    "@types/mocha": "^10.0.10",
     "@types/tampermonkey": "^4.0.5",
     "@userscripters/stackexchange-global-types": "^2.4.0",
     "@userscripters/storage": "^0.1.2",
